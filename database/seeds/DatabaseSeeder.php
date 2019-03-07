@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             ReportTypeSeeder::class,
             ConfigVariableSeeder::class,
             UserPositionSeeder::class,
-            MenuSeeder::class,
+//            MenuSeeder::class,
             ServiceAreaTypesSeeder::class,
             SingleDatabaseSeeder::class,
             CountriesTableSeeder::class,

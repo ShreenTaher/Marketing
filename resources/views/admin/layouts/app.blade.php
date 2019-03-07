@@ -24,9 +24,16 @@
     <!--begin::Global Theme Styles -->
 {!! Html::style('admin/vendors/base/vendors.bundle.rtl.css') !!}
 {!! Html::style('admin/demo/default/base/style.bundle.rtl.css') !!}
+{!! Html::style('admin/vendors/custom/datatables/datatables.bundle.css') !!}
+
 {!! Html::style('admin/custom/toastr/toastr-rtl.min.css') !!}
 {!! Html::style('admin/custom/css/custom-rtl.css') !!}
 {{--{!! Html::style('admin/custom/css/components.css') !!}--}}
+
+{!! Html::style('admin/plugins/sweetalert/sweet-alert.css') !!}
+{!! Html::style('admin/plugins/fileuploads/css/dropify.min.css') !!}
+{!! Html::style('admin/plugins/parsleyjs/src/parsley.css') !!}
+
 <!--end::Global Theme Styles -->
     <link rel="shortcut icon" href="{{Request::root()}}/admin/demo/default/media/img/logo/favicon.ico"/>
     <!--begin::Page Vendors Styles -->
@@ -415,14 +422,70 @@
 
 
 <!--begin::Global Theme Bundle -->
+{!! Html::script('admin/plugins/jquery.min.js') !!}
 {!! Html::script('admin/vendors/base/vendors.bundle.js') !!}
 {!! Html::script('admin/demo/default/base/scripts.bundle.js') !!}
-<!--end::Global Theme Bundle -->
+{!! Html::script('admin/vendors/custom/datatables/datatables.bundle.js') !!}
+{!! Html::script('admin/plugins/datatables/basic/paginations.js') !!}
 
-<!--begin::Page Scripts -->
-{!! Html::script('admin/app/js/dashboard.js') !!}
-{!! Html::script('admin/custom/js/custom.js') !!}
 {!! Html::script('admin/custom/toastr/toastr.min.js') !!}
+{!! Html::script('admin/plugins/sweetalert/sweet-alert.min.js') !!}
+{!! Html::script('admin/plugins/fileuploads/js/dropify.min.js') !!}
+{!! Html::script('admin/plugins/parsleyjs/dist/parsley.min.js') !!}
+
+
+
+
+<script>
+
+    @if(session()->has('success'))
+        setTimeout(function () {
+                showMessage('{{ session()->get('success') }}' , 'success');
+            }, 3000);
+        @endif
+
+    @if(session()->has('error'))
+        setTimeout(function () {
+                showMessage('{{ session()->get('error') }}' , 'error');
+            }, 3000);
+    @endif
+
+    function showMessage(message , type) {
+            var shortCutFunction = type ;
+            var msg = message;
+            var title = '';
+            toastr.options = {
+                positionClass: 'toast-top-center',
+                onclick: null,
+                showMethod: 'slideDown',
+                hideMethod: "slideUp",
+            };
+            var $toast = toastr[shortCutFunction](msg, title);
+            $toastlast = $toast;
+        }
+
+    function redirectPage(route) {
+
+        window.history.pushState("", "", route);
+    }
+
+    $('.dropify').dropify({
+        messages: {
+            'default': 'drag and drop the photo',
+            'replace': 'replace photo',
+            'remove': 'x',
+            'error': 'try again'
+        },
+        error: {
+            'fileSize': 'The file size is too big (1M max).'
+        }
+    });
+
+    $(document).ready(function () {
+        $('form').parsley();
+    });
+</script>
+
 <!--end::Page Scripts -->
 <!--begin::Page Vendors -->
 @yield('footer')

@@ -17,7 +17,7 @@ class CreateBranchesTable extends Migration
             $table->increments('id');
             $table->string('phone');
             $table->tinyInteger('is_active')->default(1);
-            $table->unique(['phone']);
+
 
             $table->integer('restaurant_id')->unsigned()->nullable();
             $table->integer('city_id')->unsigned()->nullable();

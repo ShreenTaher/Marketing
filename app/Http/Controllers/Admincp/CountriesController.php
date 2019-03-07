@@ -2,25 +2,59 @@
 
 namespace App\Http\Controllers\Admincp;
 
-use App\Http\Requests\Admincp\CountriesRequest;
-use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use Exception;
-use Illuminate\Http\Request;
-use Validator;
+
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use App\services\SharingService;
 
 class CountriesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('admin.countries.index');
+    public function index(){
 
+       
+        $countries = [];
+        $currencies = [];
+        $access_token = app('shared')->get('access_token');
+        $url = app('shared')->get('base_url').'/setting/countries/';
+        $currencies_url = app('shared')->get('base_url').'/setting/currencies/';
+        $client = new Client(['headers' => ['Authorization' => $access_token]]);
+        try {
+            $response = $client->request('GET', $url );
+            
+                //dd($response->getBody());
+                $response_body = json_decode($response->getBody());
+                $countries = $response_body ? $response_body->response : [];
+                $r = 0;
+
+                $currencies_response = $client->request('GET', $currencies_url );
+                $currencies_response_body = json_decode($currencies_response->getBody());
+                $currencies = $currencies_response_body ? $currencies_response_body->response : [];
+                //dd($currencies);
+
+            }
+            //catch (Guzzle\Http\Exception\ClientErrorResponseException $e) {
+            catch(GuzzleException $e){
+                $req = $e->getRequest();
+                $response =$e->getResponse();
+                //dd($e);
+               // $r = json_decode($response->getStatusCode());
+
+            }
+            
+            // if($r != 0){
+            //     dd($r);
+            // }
+
+        return view('admin.countries.index',compact('countries','access_token','currencies'));
     }
 
     /**

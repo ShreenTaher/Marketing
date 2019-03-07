@@ -1,4 +1,4 @@
-<li class="m-menu__item" aria-haspopup="true">
+<!-- <li class="m-menu__item" aria-haspopup="true">
     <a href="{{url('admincp')}}" class="m-menu__link ">
         <i class="m-menu__link-icon flaticon-line-graph"></i>
         <span class="m-menu__link-title">
@@ -7,17 +7,51 @@
             </span>
         </span>
     </a>
-</li>
+</li> -->
 <li class="m-menu__item" aria-haspopup="true">
-    <a href="{{url('admincp/testArea')}}" class="m-menu__link ">
-        <i class="m-menu__link-icon flaticon-file"></i>
+    <a href="/admincp/countries" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-layers"></i>
         <span class="m-menu__link-title">
             <span class="m-menu__link-wrap">
-                <span class="m-menu__link-text">إختبار</span>
+                <span class="m-menu__link-text">Countries</span>
             </span>
         </span>
     </a>
 </li>
+
+<li class="m-menu__item" aria-haspopup="true">
+    <a href="/admincp/cities" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-layers"></i>
+        <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+                <span class="m-menu__link-text">Cities</span>
+            </span>
+        </span>
+    </a>
+</li>
+
+<li class="m-menu__item" aria-haspopup="true">
+    <a href="/admincp/regions" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-layers"></i>
+        <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+                <span class="m-menu__link-text">Regions</span>
+            </span>
+        </span>
+    </a>
+</li>
+
+<li class="m-menu__item" aria-haspopup="true">
+    <a href="/admincp/countries" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-layers"></i>
+        <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+                <span class="m-menu__link-text">Currencies</span>
+            </span>
+        </span>
+    </a>
+</li>
+
 @can('role-list')
     <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
         <a href="javascript:;" class="m-menu__link m-menu__toggle">
@@ -47,7 +81,7 @@
     </li>
 @endcan
 
-<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+<!-- <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
     <a href="javascript:;" class="m-menu__link m-menu__toggle">
         <i class="m-menu__link-icon flaticon-layers"></i>
         <span class="m-menu__link-text">مثال لقائمة</span>
@@ -129,4 +163,4 @@
 
         </ul>
     </div>
-</li>
+</li> -->

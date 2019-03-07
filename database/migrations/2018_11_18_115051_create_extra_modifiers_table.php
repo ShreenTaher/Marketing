@@ -16,10 +16,7 @@ class CreateExtraModifiersTable extends Migration
         Schema::create('extra_modifiers', function (Blueprint $table) {
             $table->increments('id');
             $table->double('price')->default(5.00);
-
             $table->tinyInteger('has_price')->default(1);
-            $table->tinyInteger('is_visible')->default(1);
-
             $table->timestamps();
         });
 

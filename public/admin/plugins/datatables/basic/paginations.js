@@ -1,0 +1,1 @@
+var DatatablesBasicPaginations={init:function(){$("#m_table_1").DataTable({responsive:!0,pagingType:"full_numbers",columnDefs:[{targets:-1,title:"Actions",orderable:!1}]})}};jQuery(document).ready(function(){DatatablesBasicPaginations.init()});
