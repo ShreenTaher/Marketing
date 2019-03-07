@@ -34,6 +34,10 @@
 {!! Html::style('admin/plugins/fileuploads/css/dropify.min.css') !!}
 {!! Html::style('admin/plugins/parsleyjs/src/parsley.css') !!}
 
+
+{!! Html::style('admin/custom/css/main.css') !!}
+
+
 <!--end::Global Theme Styles -->
     <link rel="shortcut icon" href="{{Request::root()}}/admin/demo/default/media/img/logo/favicon.ico"/>
     <!--begin::Page Vendors Styles -->
@@ -487,6 +491,10 @@
 </script>
 
 <!--end::Page Scripts -->
+<!-- jquery validation -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+{!! Html::script('admin/custom/js/validation.js') !!}
 <!--begin::Page Vendors -->
 @yield('footer')
 <!--end::Page Vendors -->

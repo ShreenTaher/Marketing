@@ -13,8 +13,8 @@ $(document).ready(function () {
         Command: toastr[data.success ? "success" : "error"](data.msg ? data.msg : defMsg);
     }
 
-    // called falsh message session
-    if($('#d-fmsg').data('fmsg') != ''){
-        toastrNotifyResponse(JSON.parse($('#d-fmsg').text()));
-    }
+    // // called falsh message session
+    // if($('#d-fmsg').data('fmsg') != ''){
+    //     toastrNotifyResponse(JSON.parse($('#d-fmsg').text()));
+    // }
 });

@@ -29,13 +29,22 @@
         </span>
     </a>
 </li>
-
 <li class="m-menu__item" aria-haspopup="true">
     <a href="/admincp/regions" class="m-menu__link ">
         <i class="m-menu__link-icon flaticon-layers"></i>
         <span class="m-menu__link-title">
             <span class="m-menu__link-wrap">
                 <span class="m-menu__link-text">Regions</span>
+            </span>
+        </span>
+    </a>
+</li>
+<li class="m-menu__item" aria-haspopup="true">
+    <a href="{{url('admincp/positions')}}" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-file"></i>
+        <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+                <span class="m-menu__link-text">المناصب</span>
             </span>
         </span>
     </a>
