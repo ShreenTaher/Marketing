@@ -22,11 +22,11 @@
     <!--end::Web font -->
 
     <!--begin::Global Theme Styles -->
-{!! Html::style('admin/vendors/base/vendors.bundle.rtl.css') !!}
-{!! Html::style('admin/demo/default/base/style.bundle.rtl.css') !!}
+{!! Html::style('admin/vendors/base/vendors.bundle.css') !!}
+{!! Html::style('admin/demo/default/base/style.bundle.css') !!}
 {!! Html::style('admin/vendors/custom/datatables/datatables.bundle.css') !!}
 
-{!! Html::style('admin/custom/toastr/toastr-rtl.min.css') !!}
+{!! Html::style('admin/custom/toastr/toastr.min.css') !!}
 {!! Html::style('admin/custom/css/custom-rtl.css') !!}
 {{--{!! Html::style('admin/custom/css/components.css') !!}--}}
 
@@ -492,9 +492,11 @@
 
 <!--end::Page Scripts -->
 <!-- jquery validation -->
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
-{!! Html::script('admin/custom/js/validation.js') !!}
+{!! Html::script('admin/custom/js/validation.js') !!} -->
+{!! Html::script('admin/custom/js/del-row.js') !!}
+
 <!--begin::Page Vendors -->
 @yield('footer')
 <!--end::Page Vendors -->

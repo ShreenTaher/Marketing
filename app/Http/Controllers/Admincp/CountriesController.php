@@ -18,9 +18,8 @@ class CountriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-
-       
+    public function index()
+    {
         $countries = [];
         $currencies = [];
         $access_token = app('shared')->get('access_token');

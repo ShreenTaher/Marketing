@@ -1,3 +1,9 @@
-.error{
-    color: #cc0e0e;
+.error, .parsley-required{
+    color: #B94A48;
+}
+.btn{
+    padding: 0.50rem 0.50rem;
+}
+.btn.btn-warning {
+    color: #fff;
 }

@@ -22,9 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
 
     Route::resource('/countries', 'Admincp\CountriesController');
-    Route::resource('/positions', 'Admincp\PositionsController');
     Route::resource('/cities', 'Admincp\CitiesController');
     Route::resource('/regions', 'Admincp\RegionsController');
+
+    Route::resource('/positions'        , 'Admincp\PositionsController');
+    Route::resource('/payment-methods'  , 'Admincp\PaymentMethodsController');
 
 Route::post('login', 'Admincp\AuthController@login')->name('auth.login');
 

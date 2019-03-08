@@ -61,7 +61,7 @@ countries
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="storeCountry" action="http://localhost:8000/api/setting/countries" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+              <form id="storeCountry" action="http://localhost:9000/api/setting/countries" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
               <div class="modal-body">
                 <div class="form-group">
                     <label class="col-form-label">Name in Ar :</label>
