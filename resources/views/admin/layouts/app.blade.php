@@ -4,7 +4,7 @@
 <!-- begin::Head -->
 <head>
     <meta charset="utf-8"/>
-    <title> لوحة التحكم | @yield('title') </title>
+    <title>admin panel | @yield('title') </title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -492,9 +492,9 @@
 
 <!--end::Page Scripts -->
 <!-- jquery validation -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
-{!! Html::script('admin/custom/js/validation.js') !!} -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script> -->
+<!-- {!! Html::script('admin/custom/js/validation.js') !!} --> 
 {!! Html::script('admin/custom/js/del-row.js') !!}
 
 <!--begin::Page Vendors -->

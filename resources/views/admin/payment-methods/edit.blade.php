@@ -22,8 +22,9 @@
             <div class="form-group">
                 <label class="col-form-label">Icon</label>
                 <input type="file" class="dropify" id="icon" name="icon" data-max-file-size="6M" accept="image/*"
-                data-default-file="http://localhost:9000/uploads/payment_methods/15520659825c82a5be55abc-home.png">
+                data-default-file="">
             </div>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

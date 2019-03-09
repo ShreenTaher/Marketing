@@ -14,12 +14,12 @@ $(document).on('click', '.activate-alert', function (e) {
             dataType: 'json',
             success: function (obj) {
                 if(obj.response.is_active == 1){
-                        showMessage('position activated successfully' , 'success');
+                        showMessage('business type activated successfully' , 'success');
                         clicked.parent().prev().children(0).removeClass('badge-warning').addClass('badge-success').text(' فعال');
                         clicked.removeClass('btn-success').addClass('btn-warning').children(0).removeClass().addClass('fa fa-times-circle');
 
                 } else{
-                        showMessage('position de-activated successfully' , 'success');
+                        showMessage('business type de-activated successfully' , 'success');
                         clicked.parent().prev().children(0).removeClass('badge-success').addClass('badge-warning').text('غير فعال');
                         clicked.removeClass('btn-warning').addClass('btn-success').children(0).removeClass().addClass('fa fa-check-circle');
                 }
@@ -40,27 +40,27 @@ $(document).on('click', '.activate-alert', function (e) {
             elem = $(this).parent('td').parent('tr'),
             u_url = $(this).attr('update_url');
             // fill data to update
-            $('#PositionUpdateModal #ar').val(elem.find("td:eq(1)").text());
-            $('#PositionUpdateModal #en').val(elem.find("td:eq(2)").text());
-            $('#PositionUpdateModal').modal('show');
-            $('form#position_update_form').on('submit', function (e) {
+            $('#BusinessTypeUpdateModal #ar').val(elem.find("td:eq(1)").text());
+            $('#BusinessTypeUpdateModal #en').val(elem.find("td:eq(2)").text());
+            $('#BusinessTypeUpdateModal').modal('show');
+            $('form#businesstype_update_form').on('submit', function (e) {
                 e.preventDefault();
-                var url = $('form#position_update_form').attr('action');
+                var url = $('form#businesstype_update_form').attr('action');
                 $.ajax({
                     type: 'put',           // put Request
                     url: url + id,
                     headers: {'Authorization': '{{$access_token}}'},
                     data:
-                        $("#position_update_form").serialize(), // Serialized Data
+                        $("#businesstype_update_form").serialize(), // Serialized Data
                     dataType: 'json',
                     success: function (obj) {                    
                         // hide modal
                         setTimeout(function(){
-                            $('#position_update_form #ar').val('');
-                            $('#position_update_form #en').val('');
-                            $('#PositionUpdateModal').modal('hide');
+                            $('#businesstype_update_form #ar').val('');
+                            $('#businesstype_update_form #en').val('');
+                            $('#BusinessTypeUpdateModal').modal('hide');
                         }, 500);
-                        showMessage('position updated successfully' , 'success');
+                        showMessage('business type updated successfully' , 'success');
                         // update record in table
                         elem.find("td:eq(1)").text(obj.response.ar.name);
                         elem.find("td:eq(2)").text(obj.response.en.name);
@@ -86,24 +86,24 @@ $(document).on('click', '.activate-alert', function (e) {
     });
 
     // create new position
-    $('form#position_store_form').on('submit', function (e) {
+    $('form#businesstype_store_form').on('submit', function (e) {
             e.preventDefault();
-            var url = $('form#position_store_form').attr('action');
+            var url = $('form#businesstype_store_form').attr('action');
             $.ajax({
                 type: 'post',           // POST Request
                 url: url,
                 headers: {'Authorization': '{{$access_token}}'},
                 data:
-                    $("#position_store_form").serialize(), // Serialized Data
+                    $("#businesstype_store_form").serialize(), // Serialized Data
                 dataType: 'json',
                 success: function (obj) {
                     // hide modal
                     setTimeout(function(){
-                        $('#position_store_form #ar').val('');
-                        $('#position_store_form #en').val('');
-                        $('#PositionModal').modal('hide');
+                        $('#businesstype_store_form #ar').val('');
+                        $('#businesstype_store_form #en').val('');
+                        $('#BusinessTypeModal').modal('hide');
                     }, 500);
-                    showMessage('position added successfully' , 'success');
+                    showMessage('business type added successfully' , 'success');
 
                     // add new record in table
                     var str = `
@@ -122,7 +122,7 @@ $(document).on('click', '.activate-alert', function (e) {
 
                     // append data into tbody of table
                     // Insert a row in the table at the beginning row
-                    $('#positions').prepend(str);
+                    $('#business-types').prepend(str);
                 },
                 error: function (data) {
                     // Error while calling the controller (HTTP Response Code different as 200 OK

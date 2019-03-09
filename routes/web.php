@@ -25,8 +25,9 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
     Route::resource('/cities', 'Admincp\CitiesController');
     Route::resource('/regions', 'Admincp\RegionsController');
 
-    Route::resource('/positions'        , 'Admincp\PositionsController');
-    Route::resource('/payment-methods'  , 'Admincp\PaymentMethodsController');
+    Route::get('/positions'        , 'Admincp\PositionsController@index');
+    Route::get('/payment-methods'  , 'Admincp\PaymentMethodsController@index');
+    Route::get('/business-types'   , 'Admincp\BusinessTypesController@index');
 
 Route::post('login', 'Admincp\AuthController@login')->name('auth.login');
 

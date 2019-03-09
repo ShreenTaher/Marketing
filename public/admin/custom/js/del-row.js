@@ -30,7 +30,7 @@ $(document).on('click', '.delete-alert', function (e) {
                     },
                     error: function(data) {
                         
-                      showMessage('not found' , 'error');
+                      showMessage('fail' , 'error');
                     }
                 });
             } else {

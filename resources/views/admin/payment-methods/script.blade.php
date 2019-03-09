@@ -10,7 +10,6 @@ $(document).on('click', '.activate-alert', function (e) {
             type: 'get',       // get Request
             url: a_url + id + '/activate',
             headers: {'Authorization': '{{$access_token}}'},
-            data:'',
             dataType: 'json',
             success: function (obj) {
                 if(obj.response.is_active == 1){
@@ -42,42 +41,70 @@ $(document).on('click', '.activate-alert', function (e) {
             // fill data to update
             $('#PaymentMethodUpdateModal #ar').val(elem.find("td:eq(1)").text());
             $('#PaymentMethodUpdateModal #en').val(elem.find("td:eq(2)").text());
+            $('.dropify-clear').click();
+            // display old image
+            var imagenUrl = elem.find("td:eq(3)").children(0).attr('src');
+            var drEvent = $('#icon').dropify({
+                defaultFile: imagenUrl
+            });
+            drEvent = drEvent.data('dropify');
+            drEvent.resetPreview();
+            drEvent.clearElement();
+            drEvent.settings.defaultFile = imagenUrl;
+            drEvent.destroy();
+            drEvent.init();
 
-            $('#PaymentMethodUpdateModal #icon').attr('data-default-file', elem.find("td:eq(3)").children(0).attr('src'));
-            $('#PaymentMethodUpdateModal').modal('show');
+            // $('#PaymentMethodUpdateModal #icon').attr('data-default-file', elem.find("td:eq(3)").children(0).attr('src'));
+            $('#PaymentMethodUpdateModal').modal('show'); 
+
             $('form#paymentmethod_update_form').on('submit', function (e) {
                 e.preventDefault();
-                var url = $('form#paymentmethod_update_form').attr('action');
-                $.ajax({
-                    type: 'put',           // put Request
+
+                let form = this,
+                    url = form.action,
+                    formData = new FormData(form),
+                    base_url = "{{substr(app('shared')->get('base_url'), 0, -4)}}",
+                    ajaxReq = null;
+
+                formData.append("_method", "PUT");    // to apply file              
+                if (ajaxReq != null) ajaxReq.abort();
+                ajaxReq = $.ajax({
+                    method: 'post',           // method post to apply file uploader with _method PUT
                     url: url + id,
-                    headers: {'Authorization': '{{$access_token}}'},
-                    data:
-                        $("#paymentmethod_update_form").serialize(), // Serialized Data
+                    headers: {
+                        Authorization: '{{$access_token}}'
+                    },
+                    data: formData,
                     dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (obj) {                    
                         // hide modal
                         setTimeout(function(){
                             $('#paymentmethod_update_form #ar').val('');
                             $('#paymentmethod_update_form #en').val('');
+                            $('#paymentmethod_update_form #icon').attr('data-default-file', '');
+                            $('#paymentmethod_update_form #icon').attr('data-show-remove', 'false');
                             $('#PaymentMethodUpdateModal').modal('hide');
                         }, 500);
                         showMessage('payment method updated successfully' , 'success');
                         // update record in table
                         elem.find("td:eq(1)").text(obj.response.ar.name);
                         elem.find("td:eq(2)").text(obj.response.en.name);
+                        elem.find("td:eq(3)").children(0).attr('src', base_url + obj.response.icon);
                     },
                     error: function (data) {
                     // Error while calling the controller (HTTP Response Code different as 200 OK
                         // validation unique name
-                        if(data.responseJSON.statusCode == 422){
-                            if(data.responseJSON.response.errors.ar && data.responseJSON.response.errors.en)
-                                showMessage('english and arabic name already exist', 'warning');
-                            else if(data.responseJSON.response.errors.en)
-                                showMessage('english name already exist', 'warning');
-                            else if(data.responseJSON.response.errors.ar)
-                                showMessage('arabic name already exist', 'warning');
-                
+                        if(data.status == 422){
+                        if(data.responseJSON.errors.ar && data.responseJSON.errors.en)
+                            showMessage('english and arabic name already exist', 'warning');
+                        else if(data.responseJSON.errors.en)
+                            showMessage('english name already exist', 'warning');
+                        else if(data.responseJSON.errors.ar)
+                            showMessage('arabic name already exist', 'warning');
+            
                         }else {
                             showMessage('fail' , 'error');
                         }
@@ -91,21 +118,25 @@ $(document).on('click', '.activate-alert', function (e) {
     $('form#paymentmethod_store_form').on('submit', function (e) {
             e.preventDefault();
             var url = $('form#paymentmethod_store_form').attr('action');
+            var $this = $(this);
             var formData = new FormData(this);
-              console.log(formData.values());
-              for (var value of formData.values()) {
-                  console.log(value); 
-              }
+
+            // add assoc key values, this will be posts values
+            formData.append("icon", this.file);
+            formData.append("upload_file", true);
             $.ajax({
-                type: 'post',           // POST Request
+                method: 'post',           // POST Request
                 url: url,
                 headers: {'Authorization': '{{$access_token}}'},
                 data: formData,
                     // $("#paymentmethod_store_form").serialize(), // Serialized Data
                 dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function (obj) {
                     // hide modal
-                    setTimeout(function(){
+                    setTimeout(function(){                                                                              
                         $('#paymentmethod_store_form #ar').val('');
                         $('#paymentmethod_store_form #en').val('');
                         $('#PaymentMethodModal').modal('hide');
@@ -123,25 +154,28 @@ $(document).on('click', '.activate-alert', function (e) {
                             </td>
                             <td>${obj.response.is_active == 1 ? '<span class="badge badge-success">فعال</span>' : '<span class="badge badge-danger" >غير فعال </span>'}</td>
                             <td>
-                            <a href="" class="btn ${obj.response.is_active == 1 ? 'btn-warning' : 'btn-success' } m-btn activate-alert" data-id="${obj.response.id}" activate_url="{{app('shared')->get('base_url')}}/managment/paymentmethod/"><i class="fa ${obj.response.is_active == 1 ? 'fa-times-circle' : 'fa-check-circle' }"></i></a>
-                            <a href="" class="btn btn-brand m-btn update-alert" data-id=${obj.response.id} update_url="{{app('shared')->get('base_url')}}/managment/paymentmethod/"><i class="fa fa-edit"></i></a>
-                            <a href="" class="btn btn-danger m-btn delete-alert" data-id=${obj.response.id} delete_url="{{app('shared')->get('base_url')}}/managment/paymentmethod/"><i class="fa fa-trash"></i></a>
+                            <a href="" class="btn ${obj.response.is_active == 1 ? 'btn-warning' : 'btn-success' } m-btn activate-alert" data-id="${obj.response.id}" activate_url="{{app('shared')->get('base_url')}}/managment/payment-methods/"><i class="fa ${obj.response.is_active == 1 ? 'fa-times-circle' : 'fa-check-circle' }"></i></a>
+                            <a href="" class="btn btn-brand m-btn update-alert" data-id=${obj.response.id} update_url="{{app('shared')->get('base_url')}}/managment/payment-methods/"><i class="fa fa-edit"></i></a>
+                            <a href="" class="btn btn-danger m-btn delete-alert" data-id=${obj.response.id} delete_url="{{app('shared')->get('base_url')}}/managment/payment-methods/"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     `;
 
                     // append data into tbody of table
-                    document.getElementById('positions').innerHTML += str;
+                    var tableRef = document.getElementById('m_table_1').getElementsByTagName('tbody')[0];
+
+                    // Insert a row in the table at the beginning row
+                    $('#payment-methods').prepend(str);
                 },
                 error: function (data) {
                     // Error while calling the controller (HTTP Response Code different as 200 OK
                     // validation unique name
-                    if(data.responseJSON.statusCode == 422){
-                        if(data.responseJSON.response.errors.ar && data.responseJSON.response.errors.en)
+                    if(data.status == 422){
+                        if(data.responseJSON.errors.ar && data.responseJSON.errors.en)
                             showMessage('english and arabic name already exist', 'warning');
-                        else if(data.responseJSON.response.errors.en)
+                        else if(data.responseJSON.errors.en)
                             showMessage('english name already exist', 'warning');
-                        else if(data.responseJSON.response.errors.ar)
+                        else if(data.responseJSON.errors.ar)
                             showMessage('arabic name already exist', 'warning');
             
                     }else {

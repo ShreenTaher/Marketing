@@ -59,7 +59,16 @@
         </span>
     </a>
 </li>
-
+<li class="m-menu__item" aria-haspopup="true">
+    <a href="{{url('admincp/business-types')}}" class="m-menu__link ">
+        <i class="m-menu__link-icon flaticon-file"></i>
+        <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+                <span class="m-menu__link-text">Business Types</span>
+            </span>
+        </span>
+    </a>
+</li>
 <li class="m-menu__item" aria-haspopup="true">
     <a href="/admincp/countries" class="m-menu__link ">
         <i class="m-menu__link-icon flaticon-layers"></i>

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admincp;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 
-class PaymentMethodsController extends Controller
+class BusinessTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,20 +18,13 @@ class PaymentMethodsController extends Controller
         // get access token from app service provider
         $access_token = app('shared')->get('access_token');
         // get base url from app service provider
-        $url = app('shared')->get('base_url').'/managment/payment-methods/';
-
+        $url = app('shared')->get('base_url').'/managment/business-types/';
+        
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
         $response = $client->request('GET', $url );
         $response_body = json_decode($response->getBody());
-
-        // $methods = [];
-
-        // for ($i = 1; $i < 810; $i++) {
-        //     $methods = array_merge($methods, $response_body->response);
-        // }
-        
-        $methods = $response_body ? $response_body->response : [];
-        return view('admin.payment-methods.index', compact('methods', 'access_token'));
+        $business_types = $response_body ? $response_body->response : [];
+        return view('admin.business-types.index', compact('business_types', 'access_token'));
     }
 
 }
