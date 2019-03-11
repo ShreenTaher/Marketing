@@ -5,120 +5,55 @@ namespace App\Http\Controllers\Admincp;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Validator;
-
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
     /**
+     * Show the form for login.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        if(isset($_COOKIE['access_token'])){
+            return redirect('/admincp/positions');
+        } else
+            return view('admin.auth.login');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(){
-
-        $url = app('shared')->get('base_url').'/auth/login/';
-
-        //$client = new Client(['headers' => ['Authorization' => $this->token]]);
-        $client = new Client();
-        try {
-        
-            $response = $client->post($url, [
-              'form_params' => [
-                  'email' => $cat,
-                  'password' =>''
-              ]
-              
-            ]); 
-                //dd($response->getBody());
-                $response_body = json_decode($response->getBody());
-                $token = $response_body ? $response_body->response : '';
-                $access_token = 'bearer '.$token;
-                $sharingService->share('access_token', $access_token);
-                dd($access_token);
-                $r = 0;
-
-            }
-            //catch (Guzzle\Http\Exception\ClientErrorResponseException $e) {
-            catch(GuzzleException $e){
-                $req = $e->getRequest();
-                $response =$e->getResponse();
-                $r = json_decode($response->getStatusCode());
-
-            }
-            
-            if($r != 0){
-                dd($r);
-            }
-
-        return view('admin.countries.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function login(Request $request)
     {
-
+        // Cookie::queue($name, $value, $minutes);
+        // $value = Cookie::get('name');
+        $hour = time() + 3600 * 24 * 30;
+        Cookie::queue('access_token', 'bearer '.$request->access_token, $hour);
+        $value = Cookie::get('access_token');
+        return response()->json($value);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    //  /**
+    //  * Log the user out (Invalidate the token)
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function logout()
+    // {
+    //     Cookie::forget('access_token');
+    //     $this->guard()->logout();
+    //     return $this->sendJson(null);
+    // }
+
+    public function logout()
     {
-
+        Cookie::forget('myCookie');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CountriesRequest $request, $id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-
-    }
 }

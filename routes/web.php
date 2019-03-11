@@ -19,7 +19,14 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Route::get('admincp/login'        , 'Admincp\AuthController@showLoginForm');
+Route::post('admincp/login'       ,'Admincp\AuthController@login')->name('login');
+
+
 Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
+
+    Route::get('logout'            ,'Admincp\Auth\LoginController@logout')->name('admincp.logout');
 
     Route::resource('/countries', 'Admincp\CountriesController');
     Route::resource('/cities', 'Admincp\CitiesController');
@@ -29,7 +36,6 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
     Route::get('/positions'        , 'Admincp\PositionsController@index');
     Route::get('/payment-methods'  , 'Admincp\PaymentMethodsController@index');
     Route::get('/business-types'   , 'Admincp\BusinessTypesController@index');
-
-Route::post('login', 'Admincp\AuthController@login')->name('auth.login');
-
+    
+    Route::post('logout'           , 'AuthController@logout');
 });

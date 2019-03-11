@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admincp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cookie;
 
 class BusinessTypesController extends Controller
 {
@@ -15,8 +16,8 @@ class BusinessTypesController extends Controller
      */
     public function index()
     {
-        // get access token from app service provider
-        $access_token = app('shared')->get('access_token');
+        // get access token from cookie
+        $access_token = Cookie::get('access_token');
         // get base url from app service provider
         $url = app('shared')->get('base_url').'/managment/business-types/';
         

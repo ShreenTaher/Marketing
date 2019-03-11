@@ -336,22 +336,11 @@
                                                         <li class="m-nav__separator m-nav__separator--fit">
                                                         </li>
                                                         <li class="m-nav__item">
-                                                            <a href="header/profile.html" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-info"></i>
-                                                                <span class="m-nav__link-text">FAQ</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="header/profile.html" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                <span class="m-nav__link-text">Support</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__separator m-nav__separator--fit">
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="snippets/pages/user/login-1.html"
-                                                               class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                            <form method="post" action="{{app('shared')->get('base_url')}}/admincp/auth/logout" id="form_logout">
+                                                            <button type="submit"
+                                                               class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</button>
+                                                       
+                                                            </form>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -484,6 +473,26 @@
             'fileSize': 'The file size is too big (1M max).'
         }
     });
+
+    $('form#form_logout').on('submit', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('action'); // api login route
+
+        // get access token from login api
+        var ajaxCall = $.ajax({
+            method: 'post',
+            url: url,
+            dataType: 'json',
+            data: {
+                "_token": "{{ $access_token }}"
+            }
+            });
+            // success logout
+            ajaxCall.done(function(data) {
+                window.location.href = "/admincp/login";
+            });
+        });
+        
 
     $(document).ready(function () {
         $('form').parsley();
