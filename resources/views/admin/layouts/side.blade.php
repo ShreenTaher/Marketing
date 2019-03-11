@@ -70,7 +70,7 @@
     </a>
 </li>
 <li class="m-menu__item" aria-haspopup="true">
-    <a href="/admincp/countries" class="m-menu__link ">
+    <a href="/admincp/currencies" class="m-menu__link ">
         <i class="m-menu__link-icon flaticon-layers"></i>
         <span class="m-menu__link-title">
             <span class="m-menu__link-wrap">

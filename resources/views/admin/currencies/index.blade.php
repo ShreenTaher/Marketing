@@ -34,7 +34,7 @@ countries
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Countries
+                        Currencies
                     </h3>
                 </div>
             </div>
@@ -61,26 +61,17 @@ countries
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="storeCountry" action="http://localhost:9000/api/setting/countries" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+              <form id="storeCountry" action="{{$currencies_url}}" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
               <div class="modal-body">
                 <div class="form-group">
                     <label class="col-form-label">Name in Ar :</label>
-                    <input type="text" class="form-control" name="ar[name]" required data-parsley-required-message="kindly enter country name"> 
+                    <input type="text" class="form-control" name="ar[name]" required data-parsley-required-message="kindly enter currency name"> 
                   </div>
                   <div class="form-group">
                     <label class="col-form-label">Name in En :</label>
-                    <input type="text" class="form-control" name="en[name]" required data-parsley-required-message="kindly enter country name">
+                    <input type="text" class="form-control" name="en[name]" required data-parsley-required-message="kindly enter currency name">
                   </div>
-                  <div class="form-group">
-                    <label class="col-form-label">currency:</label>
-                    <select class="form-control m-input" name="currency_id" required data-parsley-required-message="kindly select currency">
-                        <option value="">Select</option>
-                        @forelse($currencies as $currency)
-                        <option value="{{ $currency->id }}">{{ $currency->en_name ? $currency->en_name->name : '-' }}</option>
-                        @empty
-                        @endforelse
-					</select>
-                  </div>
+
                   <div class="form-group">
                     <label class="col-form-label">status:</label>
                     <select class="form-control m-input" name="is_active" required data-parsley-required-message="kindly select status">
@@ -88,11 +79,6 @@ countries
 						<option value="1">activated</option>
 						<option value="0">deactivated</option>
 					</select>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-form-label">flag:</label>
-                    <input type="file" class="dropify" name="flag" required data-parsley-required-message="kindly upload photo">
                   </div>
                 
               </div>
@@ -111,36 +97,25 @@ countries
         <div class="m-portlet__body">
 
             <!--begin: Datatable -->
-            <!-- <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1"> -->
-            <!-- <table class="table table-striped- table-bordered table-hover table-checkable responsive no-wrap example" id="m_table_1"> -->
             <table class="table table-striped- table-bordered table-hover responsive" id="m_table_1">
                 <thead>
                 <tr>
                     <!-- <th>#</th> -->
-                    <th>Country ID</th>
+                    <th>Currency ID</th>
                     <th>Name in AR</th>
                     <th>Name in En</th>
-                    <th>Currency</th>
-                    <th>Flag</th>
                     <th>Status</th>
-                    <!-- <th>Change Status</th> -->
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($countries as $model)
+                @forelse($currencies as $model)
                 <tr>
                 
                 <!-- <td>{{$model->id}}</td> -->
                 <td>{{$model->id}}</td>
                 <td>{{ $model->en_name ? $model->en_name->name : '' }}</td>
                 <td>{{$model->ar_name ? $model->ar_name->name : '' }}</td>
-                <td>{{ $model->currency != null ? $model->currency->title : '-'}}</td>
-                <td>
-                    @if($model->flag != '')
-                        <img class="img-responsive" style="width: 50px; height: 50px;" src="{{ $model->flag }}"/>
-                    @endif
-                </td>
                 <td>{{ $model->is_active == 1 ? 'active' : 'deactive'}}</td>
                 
                 <td>
@@ -160,7 +135,7 @@ countries
                         <i class="fa fa-edit"></i>
                     </a>
 
-                    <a href="javascript:;" id="delete{{ $model->id }}" data-id="{{ $model->id }}" class="btn btn-icon btn-xs waves-effect btn-default m-b-5 delete" data-url="http://localhost:8000/api/setting/countries/{{$model->id}}">
+                    <a href="javascript:;" id="delete{{ $model->id }}" data-id="{{ $model->id }}" class="btn btn-icon btn-xs waves-effect btn-default m-b-5 delete" data-url="{{$currencies_url.$model->id}}">
                         <i class="fa fa-times"></i>
                     </a>
 
@@ -174,7 +149,7 @@ countries
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form id="editCountry" action="http://localhost:8000/api/setting/countries/{{$model->id}}" method="post" enctype="multipart/form-data">
+                          <form id="editCountry" action="{{$currencies_url.$model->id}}" method="post" enctype="multipart/form-data">
                           <div class="modal-body">
                             
                                 {{ method_field('PUT') }}
@@ -186,16 +161,7 @@ countries
                                     <label class="col-form-label">Name in En :</label>
                                     <input type="text" class="form-control" name="en[name]" value="{{$model->en_name->name}}" required data-parsley-required-message="kindly enter country name">
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-form-label">currency:</label>
-                                    <select class="form-control m-input" name="currency_id" required data-parsley-required-message="kindly select currency">
-                                        <option value="" disabled>Select</option>
-                                        @forelse($currencies as $currency)
-                                        <option value="{{ $currency->id }}" @if($model->currency){{$model->currency->id ==  $currency->id ? 'selected' : ''}}@endif>{{ $currency->en_name ? $currency->en_name->name : '-' }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                </div>
+                    
                                 <div class="form-group">
                                     <label class="col-form-label">status:</label>
                                     <select class="form-control m-input" name="is_active" required data-parsley-required-message="kindly select status">
@@ -203,12 +169,6 @@ countries
                                         <option value="1" {{$model->is_active == 1 ? 'selected' : ''}}>activated</option>
                                         <option value="0" {{$model->is_active == 0 ? 'selected' : ''}}>deactivated</option>
                                     </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-form-label">flag:</label>
-                                    <input type="file" class="dropify" name="flag" data-max-file-size="6M" accept="image/*"
-                                    data-default-file="{{ $model->flag }}">
                                 </div>
                             
                           </div>
@@ -243,6 +203,7 @@ countries
             $('body').on('click', '.delete', function () {
               var id = $(this).attr('data-id');
               var url = $(this).attr('data-url');
+              console.log('deleteurl',url);
               var $tr = $(this).closest($('#delete' + id).parent().parent());
               swal({
                   title: "Are you sure",
@@ -400,8 +361,6 @@ countries
           $('body').on('click', '.elementStatus', function () {
             var id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
-            var url = '{{  app('shared')->get('base_url')}}' +'/countries/activate/';
-            console.log(url);
             
             if(status == 1){
                 status = 0;
@@ -428,7 +387,7 @@ countries
                     $.ajax({
                         type: 'POST',
                         headers: { 'Authorization': '{{$access_token}}'  },
-                        url: '{{  app('shared')->get('base_url')}}' +'/setting/countries/activate/',
+                        url: '{{  app('shared')->get('base_url')}}' +'/setting/currencies/activate/',
                         data: {id: id , is_active: status},
                         //dataType: 'json',
                         success: function (data) {

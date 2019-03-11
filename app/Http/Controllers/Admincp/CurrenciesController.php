@@ -10,7 +10,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\services\SharingService;
 
-class CountriesController extends Controller
+class CurrenciesController extends Controller
 {
 
     /**
@@ -20,20 +20,13 @@ class CountriesController extends Controller
      */
     public function index()
     {
-        $countries = [];
         $currencies = [];
+        $r = 0;
         $access_token = app('shared')->get('access_token');
-        $url = app('shared')->get('base_url').'/setting/countries/';
         $currencies_url = app('shared')->get('base_url').'/setting/currencies/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
         try {
-            $response = $client->request('GET', $url );
-            
-                //dd($response->getBody());
-                $response_body = json_decode($response->getBody());
-                $countries = $response_body ? $response_body->response : [];
-                $r = 0;
-
+                
                 $currencies_response = $client->request('GET', $currencies_url );
                 $currencies_response_body = json_decode($currencies_response->getBody());
                 $currencies = $currencies_response_body ? $currencies_response_body->response : [];
@@ -54,7 +47,7 @@ class CountriesController extends Controller
             // }
            // dd($currencies_url);
 
-        return view('admin.countries.index',compact('countries','access_token','currencies'));
+        return view('admin.currencies.index',compact('access_token','currencies','currencies_url'));
     }
 
     /**

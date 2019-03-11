@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
     Route::resource('/countries', 'Admincp\CountriesController');
     Route::resource('/cities', 'Admincp\CitiesController');
     Route::resource('/regions', 'Admincp\RegionsController');
+    Route::resource('/currencies', 'Admincp\CurrenciesController');
 
     Route::get('/positions'        , 'Admincp\PositionsController@index');
     Route::get('/payment-methods'  , 'Admincp\PaymentMethodsController@index');
