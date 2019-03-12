@@ -61,7 +61,7 @@ cities
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="storeCountry" action="http://localhost:8000/api/setting/cities" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+              <form id="storeCountry" action="{{$cities_url}}" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
               <div class="modal-body">
                 <div class="form-group">
                     <label class="col-form-label">Name in Ar :</label>
@@ -146,7 +146,7 @@ cities
                         <i class="fa fa-edit"></i>
                     </a>
 
-                    <a href="javascript:;" id="delete{{ $model->id }}" data-id="{{ $model->id }}" class="btn btn-icon btn-xs waves-effect btn-default m-b-5 delete" data-url="http://localhost:8000/api/setting/countries/{{$model->id}}">
+                    <a href="javascript:;" id="delete{{ $model->id }}" data-id="{{ $model->id }}" class="btn btn-icon btn-xs waves-effect btn-default m-b-5 delete" data-url="{{$cities_url.$model->id}}">
                         <i class="fa fa-times"></i>
                     </a>
 
@@ -160,7 +160,7 @@ cities
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form id="editCountry" action="http://localhost:8000/api/setting/cities/{{$model->id}}" method="post" enctype="multipart/form-data">
+                          <form id="editCountry" action="{{$cities_url.$model->id}}" method="post" enctype="multipart/form-data">
                           <div class="modal-body">
                             
                                 {{ method_field('PUT') }}

@@ -22,7 +22,7 @@ class CountriesController extends Controller
     {
         $countries = [];
         $currencies = [];
-        $access_token = app('shared')->get('access_token');
+        $access_token = Cookie::get('access_token');
         $url = app('shared')->get('base_url').'/setting/countries/';
         $currencies_url = app('shared')->get('base_url').'/setting/currencies/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
@@ -54,7 +54,7 @@ class CountriesController extends Controller
             // }
            // dd($currencies_url);
 
-        return view('admin.countries.index',compact('countries','access_token','currencies'));
+        return view('admin.countries.index',compact('countries','access_token','currencies','url'));
     }
 
     /**

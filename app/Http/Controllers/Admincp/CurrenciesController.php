@@ -22,7 +22,8 @@ class CurrenciesController extends Controller
     {
         $currencies = [];
         $r = 0;
-        $access_token = app('shared')->get('access_token');
+       // $access_token = app('shared')->get('access_token');
+        $access_token = Cookie::get('access_token');
         $currencies_url = app('shared')->get('base_url').'/setting/currencies/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
         try {

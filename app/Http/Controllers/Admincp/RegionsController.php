@@ -21,7 +21,8 @@ class RegionsController extends Controller
        
         $regions = [];
         $cities = [];
-        $access_token = app('shared')->get('access_token');
+        //$access_token = app('shared')->get('access_token');
+        $access_token = Cookie::get('access_token');
         $url = app('shared')->get('base_url').'/setting/regions/';
         $cities_url = app('shared')->get('base_url').'/setting/cities/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
@@ -52,7 +53,7 @@ class RegionsController extends Controller
             // }
 
            // dd($cities);
-        return view('admin.regions.index',compact('regions','access_token','cities'));
+        return view('admin.regions.index',compact('regions','access_token','cities','url'));
     }
 
     /**

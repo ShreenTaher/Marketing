@@ -23,7 +23,7 @@ class CitiesController extends Controller
        
         $countries = [];
         $cities = [];
-        $access_token = app('shared')->get('access_token');
+        $access_token = Cookie::get('access_token');
         $url = app('shared')->get('base_url').'/setting/countries/';
         $cities_url = app('shared')->get('base_url').'/setting/cities/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
@@ -51,7 +51,7 @@ class CitiesController extends Controller
             // if($r != 0){
             //     dd($r);
             // }
-        return view('admin.cities.index',compact('countries','access_token','cities'));
+        return view('admin.cities.index',compact('countries','access_token','cities','cities_url'));
     }
 
     /**
