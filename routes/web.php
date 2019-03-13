@@ -24,7 +24,8 @@ Route::get('admincp/login'        , 'Admincp\AuthController@showLoginForm');
 Route::post('admincp/login'       ,'Admincp\AuthController@login')->name('login');
 
 
-Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
+//Route::group(['prefix' => 'admincp', 'middleware' => 'admin'], function () {
+    Route::group(['prefix' => 'admincp'], function () {
 
     Route::get('logout'            ,'Admincp\Auth\LoginController@logout')->name('admincp.logout');
 

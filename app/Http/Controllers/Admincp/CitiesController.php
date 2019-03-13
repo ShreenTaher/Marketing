@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admincp;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use Exception;
-
+use Illuminate\Support\Facades\Cookie;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\services\SharingService;

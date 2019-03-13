@@ -9,6 +9,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\services\SharingService;
+use Illuminate\Support\Facades\Cookie;
 
 class CountriesController extends Controller
 {
@@ -22,7 +23,8 @@ class CountriesController extends Controller
     {
         $countries = [];
         $currencies = [];
-        $access_token = Cookie::get('access_token');
+        //$access_token = Cookie::get('access_token');
+        $access_token = app('shared')->get('token');
         $url = app('shared')->get('base_url').'/setting/countries/';
         $currencies_url = app('shared')->get('base_url').'/setting/currencies/';
         $client = new Client(['headers' => ['Authorization' => $access_token]]);
